@@ -125,13 +125,13 @@
 	}); 
 	var mesh	= new THREE.Mesh( geometry, material );
 	mesh.position.y	= geometry.parameters.height/2
-	markerRoot.add( mesh );
+//	markerRoot.add( mesh );
 	
 	var geometry	= new THREE.TorusKnotGeometry(0.3,0.1,64,16);
 	var material	= new THREE.MeshNormalMaterial(); 
 	var mesh	= new THREE.Mesh( geometry, material );
 	mesh.position.y	= 0.5
-	markerRoot.add( mesh );
+//	markerRoot.add( mesh );
 	
 	var pano_ID = "20170311011000037";
 			var pano_x = 593933.818227;
@@ -254,7 +254,9 @@
 
             // add point cloud to scene
             var pointCloud = new THREE.PointCloud(gpxPointsGeometry, gpxPointsMaterial);
-
+             pointCloud.scale.x = 0.1;
+             pointCloud.scale.y = 0.1;
+	     pointCloud.scale.z = 0.1;
             markerRoot.add(pointCloud);
             
         }
@@ -262,3 +264,4 @@
             return new THREE.Vector3(easting, height, northing);
         }
 </script></body>
+
