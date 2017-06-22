@@ -6,6 +6,7 @@
 <!-- ar.js -->
 <script src="../build/ar.min.js"></script>
 <script>THREEx.ArToolkitContext.baseURL = '../'</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'><div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
 </div><script>
@@ -132,6 +133,25 @@
 	mesh.position.y	= 0.5
 	markerRoot.add( mesh );
 	
+	var pano_ID = "20170311011000039";
+		var pano_x = 593933.818227;
+			var pano_y = 4150673.104869;
+			var pano_z = 19.157;
+			var bearing = 156.433586;
+			var roll = -0.376391;
+			var pitch = 0.148238;
+			var convergance = 0.646938203;
+	
+	var returnFileList = 'https://jamiek36.github.io/assets/' + pano_ID + '.txt';
+    var temp = addEarthminePointCloud(returnFileList);
+				
+	function addEarthminePointCloud(fileName) {
+            $.get(fileName, function (data) {
+                emPoints = data;
+                ploth(emPoints);
+            });
+	
+	
 	onRenderFcts.push(function(){
 		mesh.rotation.x += 0.1
 	})
@@ -161,4 +181,84 @@
 			onRenderFct(deltaMsec/1000, nowMsec/1000)
 		})
 	})
+	
+	
+	
+		function ploth(emPoints) {
+
+            var gpxPointsGeometry = new THREE.Geometry();
+
+            var emPointsLocations = emPoints.split("\r\n");//.result.locations;
+            //  var emPointsQuality = emPoints;//.result['quality-information'];
+            var emPointColour = [];
+            var counter = 0;
+
+            for (var i = 0; i < emPointsLocations.length; i++) {
+                //      for (var i = 0; i < 1; i++) {
+                // random color
+                var exaggeration = 3;
+                var row = emPointsLocations[i];
+                if (row) {
+				
+				
+				     var pointCoordArray = row.split(" ");
+                     var x = Number(pointCoordArray[0]);
+					 var y = Number(pointCoordArray[1]);
+					 var z = Number(pointCoordArray[2]);
+                     var newX, newY, newZ;                 
+
+                    emPointColour[counter] = Number(pointCoordArray[2]);// emPointsQuality[i];
+                    counter = counter + 1;
+
+
+                  
+                    var tempPoint = lidarToVector3(x, y, z);
+
+                    //     var tempPoint = new THREE.Vector3(x, y, z);
+                    newX = -1 * (tempPoint.x - pano_x);
+                    newY = tempPoint.y - pano_z;
+                    newZ = tempPoint.z - pano_y;
+
+                    //    console.log("lidar_prj " + newX + "," + newY + "," + newZ);
+                    gpxPointsGeometry.vertices.push(new THREE.Vector3(newX, newY, newZ));
+
+
+
+                }
+            }
+
+            var colors = [];
+            for (var i = 0; i < gpxPointsGeometry.vertices.length; i++) {
+                var value = emPointColour[i];
+                var hex = 0xFFFFFF;//0xC0C0C0;/
+				
+                colors[i] = new THREE.Color();
+
+                colors[i].setHex(hex);
+            }
+
+            // add colors to geometry
+            gpxPointsGeometry.colors = colors;
+
+            sprite = THREE.ImageUtils.loadTexture("assets/images/disc.png");
+
+            var gpxPointsMaterial = new THREE.PointCloudMaterial({
+                size: 0.01,
+                map: sprite,
+                sizeAttenuation: true,
+                blending: THREE.AdditiveBlending,
+                transparent: false,
+                depthTest: false,
+                vertexColors: THREE.VertexColors
+            });
+
+            // add point cloud to scene
+            var pointCloud = new THREE.PointCloud(gpxPointsGeometry, gpxPointsMaterial);
+
+            markerRoot.add(pointCloud);
+            
+        }
+		   function lidarToVector3(easting, northing, height) {
+            return new THREE.Vector3(easting, height, northing);
+        }
 </script></body>
