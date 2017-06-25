@@ -230,7 +230,28 @@
             var colors = [];
             for (var i = 0; i < gpxPointsGeometry.vertices.length; i++) {
                 var value = emPointColour[i];
-                var hex = 0xFFFFFF;//0xC0C0C0;/
+                var hex = 0xFFFFFF;
+		    
+		if (value >=10 && value <11) {hex = 0xFF00;}
+                if (value >=11 && value <12) {hex = 0xFF1A0;}
+                if (value >=12 && value <13) {hex = 0xFF350;}
+                if (value >=13 && value <14) {hex = 0xFF500;}
+                if (value >=14 && value <15) {hex = 0xFF6B0;}
+                if (value >=15 && value <16) {hex = 0xFF860;}
+                if (value >=16 && value <17) {hex = 0xFFA10;}
+                if (value >=17 && value <18) {hex = 0xFFBB0;}
+                if (value >=18 && value <19) {hex = 0xFFD60;}
+                if (value >=19 && value <20) {hex = 0xFFF10;}
+                if (value >=20 && value <21) {hex = 0xF1F1D;}
+                if (value >=21 && value <22) {hex = 0xD6D628;}
+                if (value >=22 && value <23) {hex = 0xBBBB43;}
+                if (value >=23 && value <24) {hex = 0xA1A15D;}
+                if (value >=24 && value <25) {hex = 0x868678;}
+                if (value >=25 && value <26) {hex = 0x6B6B93;}
+                if (value >=26 && value <27) {hex = 0x5050AE;}
+                if (value >=17 && value <28) {hex = 0x3535C9;}
+                if (value >=28 && value <29) {hex = 0x1A1AE4;}
+                if (value >=29 && value <30) {hex = 0x00FF;}
 				
                 colors[i] = new THREE.Color();
 
@@ -257,6 +278,7 @@
              pointCloud.scale.x = 0.1;
              pointCloud.scale.y = 0.1;
 	     pointCloud.scale.z = 0.1;
+	     pointCloud.rotation.z = 1.5708;
             markerRoot.add(pointCloud);
             
         }
