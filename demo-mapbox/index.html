@@ -20,8 +20,10 @@
     }
 </script>
 
-<body style='margin : 0px; overflow: hidden;'>
-     <button onclick="myFunction()" style="z-index:1000">Click me</button>
+<body>
+    <div><button onclick="myFunction()" style="z-index:1000">Click me</button></div>
+    <div style='margin : 0px; overflow: hidden;'>
+     
     <a-scene embedded arjs='trackingMethod: best;'>
         <!--<a-marker type='pattern' url='http://localhost:2558/mr/AR.js-master/data/data/a-pattern-marker.patt'></a-marker>-->
         <!--<a-marker type='pattern' url='http://localhost:2558/mr/AR.js-master/data/data/pattern-select-marker.patt'></a-marker>-->
@@ -36,5 +38,5 @@
         </a-anchor>
         <a-camera-static />
     </a-scene>
-   
+   </div>
 </body>
