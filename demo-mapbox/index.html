@@ -1,0 +1,24 @@
+<!-- AR.js by @jerome_etienne - github: https://github.com/jeromeetienne/ar.js - info: https://medium.com/arjs/augmented-reality-in-10-lines-of-html-4e193ea9fdbf -->
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/examples/vendor/aframe/build/aframe.min.js"></script>
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/build/aframe-ar.js"></script>
+
+
+<script src="src/mapbox-terrain.js" charset="utf-8"></script>
+
+
+<body style='margin : 0px; overflow: hidden;'>
+    <a-scene embedded arjs='trackingMethod: best;'>
+        <!--<a-marker type='pattern' url='http://localhost:2558/mr/AR.js-master/data/data/a-pattern-marker.patt'></a-marker>-->
+        <!--<a-marker type='pattern' url='http://localhost:2558/mr/AR.js-master/data/data/pattern-select-marker.patt'></a-marker>-->
+        <a-entity light="type: ambient; color: #333"></a-entity>
+        <a-entity light="color: #888; intensity: 0.5; castShadow: true" position="-20 20 0"></a-entity>
+        <a-entity light="color: #888; intensity: 1.5; castShadow: true" position="+20 2 0"></a-entity>
+
+        <a-anchor hit-testing-enabled='true'>
+            <!--<a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>-->
+            <a-mapbox-terrain latitude='-42.8821' longitude='147.3272' zoom-level='8' />
+            
+        </a-anchor>
+        <a-camera-static />
+    </a-scene>
+</body>
