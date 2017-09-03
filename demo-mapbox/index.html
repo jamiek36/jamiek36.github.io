@@ -4,7 +4,21 @@
 
 
 <script src="src/mapbox-terrain.js" charset="utf-8"></script>
-
+<script type="text/javascript">
+    var zoomlevel = 8;
+    function myFunction()
+    {
+      if (zoomlevel == 8)
+      {
+      document.getElementById('mapbox').setAttribute('zoom-level', '2') ;
+      }
+        else
+              {
+      document.getElementById('mapbox').setAttribute('zoom-level', '8') ;
+              }
+        
+    }
+</script>
 
 <body style='margin : 0px; overflow: hidden;'>
     <a-scene embedded arjs='trackingMethod: best;'>
@@ -16,9 +30,10 @@
 
         <a-anchor hit-testing-enabled='true'>
             <!--<a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>-->
-            <a-mapbox-terrain latitude='-42.8821' longitude='147.3272' zoom-level='8' />
+            <a-mapbox-terrain id="mapbox" latitude='-42.8821' longitude='147.3272' zoom-level='8' />
             
         </a-anchor>
         <a-camera-static />
     </a-scene>
+    <button onclick="myFunction()">Click me</button>
 </body>
