@@ -4,7 +4,18 @@
 
 
 <script src="src/mapbox-terrain.js" charset="utf-8"></script>
-
+<script>
+  AFRAME.registerComponent('set-zoom', {
+    schema: {default:''},
+    init() {
+      const sky = document.querySelector('a-mapbox-terrain');
+      this.el.addEventListener('click', () => {
+         var zoom = sky.getAttribute('zoom-level');
+        sky.setAttribute('zoom-level', zoom + this.data);
+      });
+    }
+  });
+</script>
 
 <body  style='margin : 0px; overflow: hidden;'>
     <a-scene embedded arjs='trackingMethod: best;'>
@@ -13,7 +24,9 @@
         <a-entity light="type: ambient; color: #FCFCFF"></a-entity>
         <a-entity light="color: #888; intensity: 0.5; castShadow: true" position="-20 20 0"></a-entity>
         <a-entity light="color: #888; intensity: 1.5; castShadow: true" position="+20 2 0"></a-entity>
-
+        <a-cursor color="#4CC3D9" fuse="true" timeout="10"></a-cursor>
+          <a-sphere color="#F44336" radius="0.4" position="-4 2 0" set-zoom="+1"></a-sphere>
+        
         <a-anchor hit-testing-enabled='true'>
             <!--<a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>-->
             <a-mapbox-terrain id="mapbox" latitude='-36.8974837' longitude='147.2719673' zoom-level='9' />
